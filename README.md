@@ -9,7 +9,7 @@ Requisites:
 
 How to:
 
-1. Double click on "StartApp.jar".
+1. Double click on "VideoRetriever.jar".
 2. Enter ID of the list to download.
 3. Click on "Generate script".
 4. Choose wether or not to run the resulting script.
