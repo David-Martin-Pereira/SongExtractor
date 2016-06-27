@@ -16,7 +16,8 @@ public class VideoRetriever extends Thread
 {
     private final String idList;
     private final String outputPathDir="output_scripts";
-    private final String apiCall = "https://www.googleapis.com/youtube/v3/playlistItems?playlistId=%s&key=AIzaSyDpUsDifb_EkkHWaMXk1pUprv9Qdp3vlII&part=snippet&maxResults=50";
+    private final String apiCallPlayList = "https://www.googleapis.com/youtube/v3/playlistItems?playlistId=%s&key=AIzaSyDpUsDifb_EkkHWaMXk1pUprv9Qdp3vlII&part=snippet&maxResults=50";
+    private final String apiCallUserList = "https://www.googleapis.com/youtube/v3/playlistItems?playlistId=%s&key=AIzaSyDpUsDifb_EkkHWaMXk1pUprv9Qdp3vlII&part=snippet&maxResults=50";
     private final String youtubeDlCommand = "start /B youtube-dl --extract-audio --audio-format mp3 https://www.youtube.com/watch?v=";
     
     private Path outputFilePath;
@@ -33,7 +34,7 @@ public class VideoRetriever extends Thread
 
         try 
         {
-            String result=readApiCall(apiCall,idList);        
+            String result=readApiCall(apiCallPlayList,idList);        
             writeResultingScript(result);
         }
         catch (IOException e)
@@ -132,7 +133,7 @@ public class VideoRetriever extends Thread
         
         else
         {
-            listToReturn.addAll(listOfIds(readApiCall(apiCall,idList,nextPage)));
+            listToReturn.addAll(listOfIds(readApiCall(apiCallPlayList,idList,nextPage)));
             
             return listToReturn;
         }
