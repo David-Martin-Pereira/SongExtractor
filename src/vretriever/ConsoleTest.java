@@ -19,11 +19,11 @@ public class ConsoleTest {
         
         Scanner lector = new Scanner(System.in);
         
-        System.out.print("Do you want to run the resulting script? (s/n): ");
+        System.out.print("Do you want to run the resulting script? (y/n): ");
         
         String ok = lector.nextLine().toLowerCase();
         
-        if(ok.equals("s"))       
+        if(ok.equals("y"))       
             try
             {
                 Runtime.getRuntime().exec("powershell /c start output_scripts/"+args[0]+".bat");
