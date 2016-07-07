@@ -103,8 +103,7 @@ public class VideoRetrieverFrame extends javax.swing.JFrame {
         String listID= jTextField1.getText();
         
         new VideoRetriever(listID).start();   
-        
-        //JOptionPane.showMessageDialog(this, "Bat script generated under output_scripts", "Info", JOptionPane.INFORMATION_MESSAGE);
+                
         int ok=JOptionPane.showConfirmDialog(this, "Bat script generated under output_scripts. Do you want to run it?");
         
         if(ok==JOptionPane.OK_OPTION)       
