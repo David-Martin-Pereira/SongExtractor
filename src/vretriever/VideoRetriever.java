@@ -52,7 +52,7 @@ public class VideoRetriever extends Thread
         if(!newDir.exists())            
             newDir.mkdir();
 
-        outputFilePath= Paths.get(outputPathDir,idList+(System.getProperty("os.name").equals("Linux")?"sh":"bat"));
+        outputFilePath= Paths.get(outputPathDir,idList+(System.getProperty("os.name").equals("Linux")?".sh":".bat"));
     }
 
     private String readApiCall(String call, String ids) throws MalformedURLException, IOException
