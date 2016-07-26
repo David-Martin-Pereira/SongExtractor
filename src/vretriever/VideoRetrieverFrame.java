@@ -89,12 +89,12 @@ public class VideoRetrieverFrame extends javax.swing.JFrame {
         
         new VideoRetriever(listID).start();   
                 
-        int ok=JOptionPane.showConfirmDialog(this, "Bat script generated under output_scripts. Do you want to run it?");
+        int ok=JOptionPane.showConfirmDialog(this, "Script generated under output_scripts. Do you want to run it?");
         
         if(ok==JOptionPane.OK_OPTION)       
             try
             {
-                Runtime.getRuntime().exec("powershell /c start output_scripts/"+listID+".bat");
+                new ScriptExecutor(System.getProperty("os.name").equals("Linux")?TypeOs.LINUX:TypeOs.WINDOWS,"output_scripts/"+listID).execute();
             }
             catch(Exception e)
             {

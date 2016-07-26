@@ -18,7 +18,8 @@ public class VideoRetriever extends Thread
     private final String outputPathDir="output_scripts";
     private final String apiCallPlayList = "https://www.googleapis.com/youtube/v3/playlistItems?playlistId=%s&key=AIzaSyDpUsDifb_EkkHWaMXk1pUprv9Qdp3vlII&part=snippet&maxResults=50";
     private final String apiCallUserList = "https://www.googleapis.com/youtube/v3/playlistItems?playlistId=%s&key=AIzaSyDpUsDifb_EkkHWaMXk1pUprv9Qdp3vlII&part=snippet&maxResults=50";
-    private final String youtubeDlCommand = "start /B youtube-dl --extract-audio --audio-format mp3 https://www.youtube.com/watch?v=";
+    private final String youtubeDlCommandWindows = "start /B youtube-dl --extract-audio --audio-format mp3 https://www.youtube.com/watch?v=";
+    private final String youtubeDlCommandLinux = "youtube-dl --extract-audio --audio-format mp3 https://www.youtube.com/watch?v=%s &";
     
     private Path outputFilePath;
     
@@ -35,7 +36,7 @@ public class VideoRetriever extends Thread
         try 
         {
             String result=readApiCall(apiCallPlayList,idList);        
-            writeResultingScript(result);
+            writeResultingScript(result, System.getProperty("os.name").equals("Linux")?TypeOs.LINUX:TypeOs.WINDOWS);
         }
         catch (IOException e)
         {
@@ -51,7 +52,7 @@ public class VideoRetriever extends Thread
         if(!newDir.exists())            
             newDir.mkdir();
 
-        outputFilePath= Paths.get(outputPathDir,idList+".bat");
+        outputFilePath= Paths.get(outputPathDir,idList+(System.getProperty("os.name").equals("Linux")?"sh":"bat"));
     }
 
     private String readApiCall(String call, String ids) throws MalformedURLException, IOException
@@ -94,7 +95,7 @@ public class VideoRetriever extends Thread
         return result;
     }
 
-    private void writeResultingScript(String result) throws IOException
+    private void writeResultingScript(String result, TypeOs type) throws IOException
     {
         
         ArrayList<String> resultLines=new ArrayList<>();
@@ -103,7 +104,7 @@ public class VideoRetriever extends Thread
         
         for (String videoId:listOfIds(result))
         {
-            resultLines.add(youtubeDlCommand+videoId);
+            resultLines.add(type.equals(TypeOs.WINDOWS)?(youtubeDlCommandWindows+videoId):(String.format(youtubeDlCommandLinux,videoId)));
         }
         
         Files.write(outputFilePath, resultLines, Charset.forName("UTF-8"));

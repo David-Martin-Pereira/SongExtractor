@@ -26,7 +26,7 @@ public class ConsoleTest {
         if(ok.equals("y"))       
             try
             {
-                Runtime.getRuntime().exec("powershell /c start output_scripts/"+args[0]+".bat");
+                new ScriptExecutor(System.getProperty("os.name").equals("Linux")?TypeOs.LINUX:TypeOs.WINDOWS,"output_scripts/"+args[0]).execute();
             }
             catch(Exception e)
             {
